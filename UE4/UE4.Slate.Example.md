@@ -1,15 +1,17 @@
-# UE4 Slate的使用示例流程
+# the exaple of UE4 Slate
 
-1. 添加Slate模块
-打开对应工程.build.cs文件，添加Slate模块
+1. ## add Slate module
+
+Open the project file .build.cs file, and add Slate module.
 ```
 PrivateDependencyModuleNames.AddRange(new string[] {
     "Slate",
     "SlateCore"
 });
 ```
-2. 创建一个继承自HUD的C++类AMenuHUD
-此类将作为我们自定义的GameMode下的UI显示，并在类中定义我们需要显示的窗口控件（Slate Widget）。
+2. ## create a class inherited from HUD.
+
+this class will be the UD under the GameMode, and it contains Window (Slate Widget).
 
 //AMenuHUD.h:
 ```
@@ -20,12 +22,12 @@ class MENU_API AMenuHUD : public AHUD
 protected:
 	virtual void BeginPlay() override;
 protected:
-	TSharedPtr<class SMainMenuWidget> MenuWidget;	//要显示的菜单窗口
+	TSharedPtr<class SMainMenuWidget> MenuWidget;	
 	TSharedPtr<class SWidget> MenuWidgetContainer;
 
 public:
-	void ShowMenu();	//显示菜单
-	void RemoveMenu();	//移除菜单
+	void ShowMenu();
+	void RemoveMenu();
 };
 ```
 
@@ -42,14 +44,14 @@ void AMenuHUD::ShowMenu()
 {
 	if (GEngine && GEngine->GameViewport)
 	{
-		MenuWidget = SNew(SMainMenuWidget).OwningHUD(this);	//把本身这个HUD类作为参数传给窗口类
+		MenuWidget = SNew(SMainMenuWidget).OwningHUD(this);	
 		GEngine->GameViewport->AddViewportWidgetContent(SAssignNew(MenuWidgetContainer, SWeakWidget).PossiblyNullContent(MenuWidget.ToSharedRef()));
 	}
 	/* PlayerController which owns this HUD. */
 	if (PlayerOwner)
 	{
 		PlayerOwner->bShowMouseCursor = true;
-		PlayerOwner->SetInputMode(FInputModeUIOnly());	//设置输入模式
+		PlayerOwner->SetInputMode(FInputModeUIOnly());	
 	}
 }
 
@@ -67,9 +69,9 @@ void AMenuHUD::RemoveMenu()
 	}
 }
 ```
-3. 创建一个继承自Slate Widget的C++类SMainMenuWidget
+3. ## create a class SMainMenuWidget inherited from SCompoundWidget
 
-在Construct函数里设计我们需要显示的控件。添加一个参数用来保存自己所属的HUD，需要通过HUD中的PlayerOwner变量来获取玩家控制器。
+in function Contruct add a argument to save HUD, and we will use it to get PlayerOwner.
 ```
 //SMainMenuWidget.h
 class SMainMenuWidget : public SCompoundWidget
@@ -85,8 +87,8 @@ public:
 
 	virtual bool SupportsKeyboardFocus() const override { return true; }
 
-	FReply OnPlayClicked() const;	//开始按钮点击事件
-	FReply OnQuitClicked() const;	//退出按钮点击事件
+	FReply OnPlayClicked() const;	
+	FReply OnQuitClicked() const;
 
 private:
 	TWeakObjectPtr<class AMenuHUD> OwningHUD;
@@ -96,29 +98,24 @@ void SMainMenuWidget::Construct(const FArguments& InArgs)
 {
 	bCanSupportFocus = true;
 
-	OwningHUD = InArgs._OwningHUD;	//将生成此窗口的HUD类作为参数传过来（必须加下划线_）
-	// 文本和按钮间距设置
+	OwningHUD = InArgs._OwningHUD;	
 	const FMargin ContentPadding = FMargin(500.0f, 300.0f);
 	const FMargin ButtonPadding = FMargin(10.f);
-	// 按钮和标题文本
 	const FText TitleText = LOCTEXT("GameTitle", "My Super Great Game");
 	const FText PlayText = LOCTEXT("PlayGame", "Play");
 	const FText QuitText = LOCTEXT("QuitGame", "Quit Game");
-	//按钮字体及大小设置
 	FSlateFontInfo ButtonTextStyle = FCoreStyle::Get().GetFontStyle("EmbossedText");
 	ButtonTextStyle.Size = 40.f;
-	//标题字体及大小设置
 	FSlateFontInfo TitleTextStyle = ButtonTextStyle;
 	TitleTextStyle.Size = 60.f;
 	
-	//所有UI控件都写在这里
 	ChildSlot
 	[
 		SNew(SOverlay)
 		+ SOverlay::Slot()
 		.HAlign(HAlign_Fill).VAlign(VAlign_Fill)
 		[
-			SNew(SImage)	// 背景图片（纯黑）
+			SNew(SImage)	
 			.ColorAndOpacity(FColor::Black)
 		]
 
@@ -190,9 +187,9 @@ FReply SMainMenuWidget::OnQuitClicked() const
 
 	return FReply::Handled();
 }
+```
 
-4 创建一个继承自PlayerController的C++类
-实现按键弹出菜单的功能。
+4. ## create a class inherited from PlayerController to implement the feature of Pop menu
 
 //MenuPlayerController.h:
 ```
@@ -215,7 +212,6 @@ void AMenuPlayerController::SetupInputComponent()
 
 	if (InputComponent)
 	{
-		//在项目设置里设置对应的按键
 		InputComponent->BindAction("OpenMenu", IE_Pressed, this, &AMenuPlayerController::OpenMenu);
 	}
 }
@@ -228,8 +224,7 @@ void AMenuPlayerController::OpenMenu()
 	}
 }
 
-5. 创建一个继承自Game Mode Base的C++类AMenuGameMode
-在构造函数中初始化我们自定义的HUD类和PlayerController类
+5. ## create a class inherited from Game Mode Base and initialize HUD and PlayerController in Contruct Function.
 ```
 AMenuGameMode::AMenuGameMode()
 {
@@ -240,11 +235,9 @@ AMenuGameMode::AMenuGameMode()
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}
 	
-	//初始化自定义类
 	PlayerControllerClass = AMenuPlayerController::StaticClass();
 	HUDClass = AMenuHUD::StaticClass();
 }
 ```
-使用Slate来写界面的大体流程就是这样。
+浣犲ソ
 
-注意：之前在获取玩家控制器的时候用UGameplayStatics::GetPlayerController(GWorld, 0)，但是返回的是null。所以如果要获取到玩家控制器，可以使用HUDClass里的PlayerOwner变量。
