@@ -241,3 +241,4 @@ AMenuGameMode::AMenuGameMode()
 ```
 你好
 
+$$\frac{1}{2}$$
