@@ -33,7 +33,7 @@ public:
      * 
      * \args Arguments structure that contains widget-specific setup information.
      **/
-    void Construct(const FArguments&amp; args);
+    void Construct(const FArguments& args);
 
 private:
     /**
@@ -59,11 +59,11 @@ TutorialGameHUDUI.cpp
 #include "Menus/GlobalMenuStyle.h"
 #include "Menus/MenuStyles.h"
 
-void STutorialGameHUDUI::Construct(const FArguments&amp; args)
+void STutorialGameHUDUI::Construct(const FArguments& args)
 {
     OwnerHUD = args._OwnerHUD;
 
-    HUDStyle = &amp;FMenuStyles::Get().GetWidgetStyle("Global");
+    HUDStyle = &FMenuStyles::Get().GetWidgetStyle<FGlobalStyle>("Global");
 
     ChildSlot
         [
@@ -73,7 +73,7 @@ void STutorialGameHUDUI::Construct(const FArguments&amp; args)
                 .VAlign(VAlign_Top)
                 [
                     SNew(STextBlock)
-                        .TextStyle(&amp;HUDStyle->MenuTitleStyle)
+                        .TextStyle(&HUDStyle->MenuTitleStyle)
                         .Text(FText::FromString("SCORE: 0"))
                 ]
             + SOverlay::Slot()
@@ -81,7 +81,7 @@ void STutorialGameHUDUI::Construct(const FArguments&amp; args)
                 .VAlign(VAlign_Top)
                 [
                     SNew(STextBlock)
-                        .TextStyle(&amp;HUDStyle->MenuTitleStyle)
+                        .TextStyle(&HUDStyle->MenuTitleStyle)
                         .Text(FText::FromString("HEALTH: 100"))
                 ]
         ];
@@ -128,7 +128,7 @@ TutorialGameHUD.cpp
 #include "TutorialGameHUD.h"
 #include "TutorialGameHUDUI.h"
 
-ATutorialGameHUD::ATutorialGameHUD(const class FPostConstructInitializeProperties&amp; PCIP)
+ATutorialGameHUD::ATutorialGameHUD(const class FPostConstructInitializeProperties& PCIP)
     : Super(PCIP)
 {
 }
@@ -137,7 +137,7 @@ void ATutorialGameHUD::PostInitializeComponents()
 {
     Super::PostInitializeComponents();
 
-    if (GEngine &amp;&amp; GEngine->GameViewport)
+    if (GEngine && GEngine->GameViewport)
     {
         UGameViewportClient* Viewport = GEngine->GameViewport;
 
@@ -161,12 +161,12 @@ private:
     /**
      * Attribute storing the binding for the player's score.
      **/
-    TAttribute Score;
+    TAttribute<FText> Score;
 
     /**
      * Attribute storing the binding for the player's health.
      **/
-    TAttribute Health;
+    TAttribute<FText> Health;
 
     /**
      * Our Score will be bound to this function, which will retrieve the appropriate data and convert it into an FText.
@@ -190,7 +190,7 @@ Next, we can use the TAttributes directly in our Text specifications when constr
     .VAlign(VAlign_Top)
     [
         SNew(STextBlock)
-            .TextStyle(&amp;HUDStyle->MenuTitleStyle)
+            .TextStyle(&HUDStyle->MenuTitleStyle)
             .Text(Score)
     ]
 + SOverlay::Slot()
@@ -198,7 +198,7 @@ Next, we can use the TAttributes directly in our Text specifications when constr
     .VAlign(VAlign_Top)
     [
         SNew(STextBlock)
-            .TextStyle(&amp;HUDStyle->MenuTitleStyle)
+            .TextStyle(&HUDStyle->MenuTitleStyle)
             .Text(Health)
     ]
 ```
@@ -268,7 +268,7 @@ TutGameMode.cpp
 
 #include "TutGameMode.h"
 
-ATutGameMode::ATutGameMode(const class FPostConstructInitializeProperties&amp; PCIP)
+ATutGameMode::ATutGameMode(const class FPostConstructInitializeProperties& PCIP)
     : Super(PCIP), CurrentScore(0)
 {
 }
@@ -324,7 +324,7 @@ TutorialCharacter.cpp
 
 #include "TutorialCharacter.h"
 
-ATutorialCharacter::ATutorialCharacter(const class FPostConstructInitializeProperties&amp; PCIP)
+ATutorialCharacter::ATutorialCharacter(const class FPostConstructInitializeProperties& PCIP)
     : Super(PCIP)
 {
     Health = 100;
