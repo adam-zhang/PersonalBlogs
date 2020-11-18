@@ -329,13 +329,15 @@ ATutorialCharacter::ATutorialCharacter(const class FPostConstructInitializePrope
 {
     Health = 100;
 }
-Once weÔÇÖve got these, retrieving and applying the score and health is simple
+```
+Once we've got these, retrieving and applying the score and health is simple
 
 TutorialGameHUDUI.cpp
+```
 FText STutorialGameHUDUI::GetScore() const
 {
     // NOTE: THIS IS A TERRIBLE WAY TO DO THIS. DO NOT DO IT. IT ONLY WORKS ON SERVERS. USE GAME STATES INSTEAD!
-    ATutGameMode* gameMode = Cast(OwnerHUD->GetWorldSettings()->GetWorld()->GetAuthGameMode());
+    auto gameMode = Cast<ATutGameMode>(OwnerHUD->GetWorldSettings()->GetWorld()->GetAuthGameMode());
 
     if (gameMode == nullptr)
         return FText::FromString(TEXT("SCORE: --"));
