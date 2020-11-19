@@ -72,7 +72,6 @@ FinalCheck具有BoundsChecker提供的所有检错功能。FinalCheck 是ActiveC
 
 要想在FinalCheck 模式下测试程序，不能使用VC++集成开发环境提供的编译连接器来构造程序，而必须要使用BoundsChecker提供的编译连接器来编译连接程序。当 BoundsChecker的编译连接器编译连接程序时，会向程序中插装一些错误检测代码，这也就是FinalCheck能够比ActiveCheck找 到更多错误的原因。
 
- 详见链接： http://hi.baidu.com/anglecloudy/item/0773ab27b7d25a3394f62bcf
 
 ## 3. Visual Leak Detector
 ### 简介
@@ -277,7 +276,6 @@ Visual Leak Detector的工作分为3步，
 2. 然后在内存分配时该钩子函数被调用以记录下当时的现场；
 3. 最后检查堆内存分配链表以确定是 否存在内存泄漏并将泄漏内存的现场转换成可读的形式输出。
 
-原文链接：http://blog.csdn.net/seawen/article/details/3714128
 
 ## 附加
 
@@ -373,7 +371,7 @@ View---->debug windows--->watch,call stack,memory,register
 ### 下表说明调试器可识别的格式说明符。
 
 |说明符|格式|值|显示|
-|-|-|-|-|
+|:-:|:-|:-|:-|
 |d,i|	signed 十进制整数|	0xF000F065|	-268373915|
 |u	|unsigned 十进制整数	|0x0065	|101
 |o|	unsigned 八进制整数	|0xF065	|0170145|
@@ -393,7 +391,7 @@ View---->debug windows--->watch,call stack,memory,register
 ### 下表包含用于内存位置的格式化符号。
 
 |符号|格式|显示|
-|-|-|-|
+|:-:|:-|:-|
 |ma	|64 个 ASCII 字符	|0x0012ffac .4...0...".0W&.......1W&.0.:W..1...."..1.JO&.1.2.."..1...0y....1
 |m	|以十六进制表示的 16 个字节，后跟 16 个 ASCII 字符	|0x0012ffac B3 34 CB 00 84 30 94 80 FF 22 8A 30 57 26 00 00 .4...0...".0W&..
 |mb	|以十六进制表示的 16 个字节，后跟 16 个 ASCII 字符	|0x0012ffac B3 34 CB 00 84 30 94 80 FF 22 8A 30 57 26 00 00 .4...0...".0W&..
