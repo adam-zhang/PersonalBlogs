@@ -398,7 +398,6 @@ View---->debug windows--->watch,call stack,memory,register
 |mw	|8 个字	0x0012ffac |34B3 00CB 3084 8094 22FF 308A 2657 0000
 |md	|4 个双倍字长	|0x0012ffac 00CB34B3 80943084 308A22FF 00002657
 |mq	|2 个四倍字长	|0x0012ffac 7ffdf00000000000 5f441a790012fdd4
-
 |mu	|2 字节字符 (Unicode)|	0x0012fc60 8478 77f4 ffff ffff 0000 0000 0000 0000
 　　可以使用带有计算为位置的任何值或表达式的内存位置说明符。
 
