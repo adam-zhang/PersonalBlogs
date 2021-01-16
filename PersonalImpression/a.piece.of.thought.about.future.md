@@ -14,3 +14,4 @@ how to use them in projects and write the examples about it.
 pool in C++. 
 4. write a red-black tree in C++.
 5. try to be an architect in a year.
+6. to.study c++ in cppreference.com, it must blocked by Chinese government, but I don't know way.
