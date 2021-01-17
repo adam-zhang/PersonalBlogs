@@ -6,4 +6,9 @@
    	int a = 5;
 	```
    in statement above, variable a is a rvalue, and 5 is rvalue;
- 
+   of course, in C++, lvalue can be rvalue, like:
+   ```
+	int b = 5;
+	int a = b;
+   ```
+   but opposite sometimes doesn't work.
