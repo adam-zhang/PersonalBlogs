@@ -64,6 +64,7 @@ syntax on
 set statusline=%F%r\ [HEX=%B][%l,%v,%P]\ %{strftime(\"%H:%M\")}
 
 "显示行号
+set rnu
 set nu "等同于 set number
 
 "突出显示当前行
@@ -220,4 +221,3 @@ endfunc
 ```
 
 世界上没有最好的配置，只有适合自己的vimrc配置。
-在这里插入图片描述
