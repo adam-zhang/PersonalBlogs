@@ -18,3 +18,4 @@ tar xjvf filename.tar.bz2
 |tar.xz|xvfJ|
 |tar.gz|xzvf|
 |tar.bz2|xjvf|
+|tar|xvf|
